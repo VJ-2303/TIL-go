@@ -1,0 +1,21 @@
+{{define "base"}}
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Today I Learned</title>
+    </head>
+    <body>
+        <header>
+            <h1><a href="/">TIL</a></h1>
+        </header>
+        <nav>
+            <a href="/">Home</a>
+        </nav>
+        <main>{{template "main" .}}</main>
+        <footer>
+            Powered by <a href="https://golang.org/">Go</a> in {{.CurrentYear}}
+        </footer>
+    </body>
+</html>
+{{end}}
