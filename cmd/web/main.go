@@ -35,12 +35,8 @@ func main() {
 		Handler:  app.routes(),
 	}
 
-	log.Println("Starting server on :4000")
+	infoLog.Println("Starting server on :4000")
 	err = srv.ListenAndServe()
 
 	errorLog.Fatal(err)
-}
-
-func home(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("Hello from TIL"))
 }

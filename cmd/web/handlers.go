@@ -1,5 +1,3 @@
-// File: cmd/web/handlers.go
-
 package main
 
 import (
