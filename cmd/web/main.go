@@ -9,11 +9,13 @@ import (
 	"os"
 
 	_ "github.com/jackc/pgx/v5/stdlib"
+	"github.com/vj-2303/til-go/internal/data"
 )
 
 type application struct {
 	errorLog      *log.Logger
 	infoLog       *log.Logger
+	models        data.Models
 	templateCache map[string]*template.Template
 }
 

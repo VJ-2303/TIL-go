@@ -3,9 +3,12 @@ package main
 import (
 	"html/template"
 	"path/filepath"
+
+	"github.com/vj-2303/til-go/internal/data"
 )
 
 type templateData struct {
+	TILs        []*data.TIL
 	CurrentYear int
 }
 

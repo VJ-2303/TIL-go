@@ -1,4 +1,16 @@
 {{template "base" .}} {{define "main"}}
 <h2>Latest Posts</h2>
-<p>There's Nothing to see here</p>
-{{end}}
+{{if .TILs}}
+<table>
+    <tr>
+        <th>Title</th>
+    </tr>
+    {{range .TILs}}
+    <tr>
+        <td><a href="/til/view?id={{.ID}}">{{.Title}}</a></td>
+    </tr>
+    {{end}}
+</table>
+{{else}}
+<p>There's nothing to see here... yet!</p>
+{{end}} {{end}}
