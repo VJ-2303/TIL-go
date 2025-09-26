@@ -1,10 +1,14 @@
 package main
 
 import (
+	"database/sql"
+	"flag"
 	"html/template"
 	"log"
 	"net/http"
 	"os"
+
+	_ "github.com/jackc/pgx/v5/stdlib"
 )
 
 type application struct {
@@ -15,8 +19,17 @@ type application struct {
 
 func main() {
 
+	dsn := flag.String("dsn", "", "PostgreSQL DSN")
+	flag.Parse()
+
 	infoLog := log.New(os.Stdout, "INFO\t", log.Ldate|log.Ltime)
 	errorLog := log.New(os.Stderr, "ERROR\r", log.Ldate|log.Ltime|log.Lshortfile)
+
+	db, err := openDB(*dsn)
+	if err != nil {
+		errorLog.Fatal(err)
+	}
+	defer db.Close()
 
 	templateCache, err := newTemplateCache()
 	if err != nil {
@@ -39,4 +52,15 @@ func main() {
 	err = srv.ListenAndServe()
 
 	errorLog.Fatal(err)
+}
+
+func openDB(dsn string) (*sql.DB, error) {
+	db, err := sql.Open("pgx", dsn)
+	if err != nil {
+		return nil, err
+	}
+	if err = db.Ping(); err != nil {
+		return nil, err
+	}
+	return db, nil
 }
