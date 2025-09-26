@@ -1,0 +1,90 @@
+{
+  "git_panel": {
+    "dock": "left"
+  },
+  "show_edit_predictions": false,
+  "format_on_save": "on",
+  "gutter": {
+    "folds": false,
+    "line_numbers": true,
+    "breakpoints": false,
+    "runnables": false,
+    "min_line_number_digits": 2
+  },
+  "inlay_hints": {
+    "show_parameter_hints": true,
+    "show_value_hints": false,
+    "enabled": true,
+    "show_other_hints": true
+  },
+  "languages": {
+    "Go": {
+      "formatter": "language_server",
+      "format_on_save": "on",
+      "inlay_hints": {
+        // --- POWER-UP: More inlay hints ---
+        "enabled": true,
+        "show_background": true,
+        "show_parameter_hints": true, // Shows parameter names in func calls
+        "show_value_hints": false, // Shows names for constant values
+        "show_type_hints": false, // Shows types for variables (:=)
+        "show_other_hints": true
+      }
+    }
+  },
+  "lsp": {
+    "gopls": {
+      "initialization_options": {
+        // --- This is the fix from before ---
+        "usePlaceholders": true
+      }
+    }
+  },
+  "telemetry": {
+    "diagnostics": false,
+    "metrics": false
+  },
+  "agent": {
+    "play_sound_when_agent_done": true,
+    "inline_assistant_model": {
+      "provider": "copilot_chat",
+      "model": "gpt-4.1"
+    },
+    "default_profile": "write",
+    "default_model": {
+      "provider": "copilot_chat",
+      "model": "gemini-2.5-pro"
+    }
+  },
+  "icon_theme": "Material Icon Theme",
+  "edit_predictions": {
+    "disabled_globs": [],
+    "mode": "eager",
+    "copilot": {
+      "proxy": null,
+      "proxy_no_verify": null,
+      "enterprise_uri": null
+    },
+    "enabled_in_text_threads": false
+  },
+  "features": {
+    "edit_prediction_provider": "none"
+  },
+  "cursor_blink": false,
+  "selection_highlight": true,
+  "ui_font_size": 16,
+  "ui_font_weight": 500,
+  "buffer_font_size": 15,
+  "theme": {
+    "mode": "dark",
+    "light": "VSCode Dark Modern",
+    "dark": "VSCode Dark Modern"
+  },
+  "buffer_font_weight": 600,
+  "ui_font_family": "Inter",
+  "buffer_font_family": "JetBrains Mono",
+  "terminal": {
+    "font_family": "JetBrains Mono",
+    "working_directory": "current_project_directory"
+  }
+}
