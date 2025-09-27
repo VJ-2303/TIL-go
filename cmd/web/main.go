@@ -41,6 +41,7 @@ func main() {
 	app := &application{
 		infoLog:       infoLog,
 		errorLog:      errorLog,
+		models:        data.NewModels(db),
 		templateCache: templateCache,
 	}
 

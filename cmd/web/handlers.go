@@ -20,7 +20,7 @@ func (app *application) home(w http.ResponseWriter, r *http.Request) {
 }
 
 func (app *application) tilCreate(w http.ResponseWriter, r *http.Request) {
-	app.render(w, r, http.StatusOK, "create,html", nil)
+	app.render(w, r, http.StatusOK, "create.html", nil)
 }
 
 func (app *application) tilCreatePost(w http.ResponseWriter, r *http.Request) {
