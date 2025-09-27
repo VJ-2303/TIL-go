@@ -1,0 +1,7 @@
+{{template "base" .}} {{define "main"}} {{with .TIL}}
+<article>
+    <h2>{{.Title}}</h2>
+    <p>{{.Content}}</p>
+    <time>Published on: {{.CreatedAt}}</time>
+</article>
+{{end}} {{end}}
