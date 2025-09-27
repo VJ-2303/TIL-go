@@ -9,6 +9,7 @@ import (
 
 type templateData struct {
 	TILs        []*data.TIL
+	TIL         *data.TIL
 	CurrentYear int
 }
 

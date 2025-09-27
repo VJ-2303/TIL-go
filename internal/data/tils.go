@@ -2,6 +2,8 @@ package data
 
 import (
 	"database/sql"
+	"errors"
+	"fmt"
 	"time"
 )
 
@@ -54,4 +56,25 @@ func (m *TILModel) Latest() ([]*TIL, error) {
 		return nil, err
 	}
 	return tils, nil
+}
+
+func (m *TILModel) Get(id int) (*TIL, error) {
+
+	query := `SELECT id, title, content, created_at FROM tils WHERE id = $1`
+
+	var t TIL
+
+	err := m.DB.QueryRow(query, id).Scan(
+		&t.IDs,
+		&t.Title,
+		&t.Content,
+		&t.CreatedAt,
+	)
+	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			return nil, fmt.Errorf("no til with id %d", id)
+		}
+		return nil, err
+	}
+	return &t, nil
 }
