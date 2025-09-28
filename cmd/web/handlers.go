@@ -1,10 +1,13 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
+
+	"github.com/vj-2303/til-go/internal/data"
 )
 
 func (app *application) home(w http.ResponseWriter, r *http.Request) {
@@ -55,7 +58,12 @@ func (app *application) tilView(w http.ResponseWriter, r *http.Request) {
 	}
 	til, err := app.models.TILs.Get(id)
 	if err != nil {
-		app.serverError(w, err)
+		if errors.Is(err, data.ErrTilNotExists) {
+			http.NotFound(w, r)
+		} else {
+			app.serverError(w, err)
+		}
+		return
 	}
 	data := &templateData{
 		TIL: til,

@@ -3,8 +3,11 @@ package data
 import (
 	"database/sql"
 	"errors"
-	"fmt"
 	"time"
+)
+
+var (
+	ErrTilNotExists = errors.New("Til No exists")
 )
 
 type TIL struct {
@@ -72,7 +75,7 @@ func (m *TILModel) Get(id int) (*TIL, error) {
 	)
 	if err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
-			return nil, fmt.Errorf("no til with id %d", id)
+			return nil, ErrTilNotExists
 		}
 		return nil, err
 	}
