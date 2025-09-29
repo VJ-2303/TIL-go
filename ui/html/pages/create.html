@@ -2,10 +2,16 @@
 <form action="/til/create" method="POST">
     <div>
         <label>Title:</label>
+        {{with .Errors}}
+        <label class="error">{{.title}}</label>
+        {{end}}
         <input type="text" name="title" />
     </div>
     <div>
         <label>Content:</label>
+        {{with .Errors}}
+        <label class="error">{{.content}}</label>
+        {{end}}
         <textarea name="content"></textarea>
     </div>
     <div>

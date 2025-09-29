@@ -11,6 +11,7 @@ type templateData struct {
 	TILs        []*data.TIL
 	TIL         *data.TIL
 	CurrentYear int
+	Errors      map[string]string
 }
 
 func newTemplateCache() (map[string]*template.Template, error) {

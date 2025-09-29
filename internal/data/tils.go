@@ -4,6 +4,8 @@ import (
 	"database/sql"
 	"errors"
 	"time"
+
+	"github.com/vj-2303/til-go/internal/validator"
 )
 
 var (
@@ -15,6 +17,13 @@ type TIL struct {
 	Title     string
 	Content   string
 	CreatedAt time.Time
+}
+
+func ValidateTIL(v *validator.Validator, til *TIL) {
+	v.Check(validator.NotBlank(til.Title), "title", "must not be empty")
+	v.Check(validator.NotBlank(til.Content), "content", "must not be empty")
+	v.Check(validator.MaxChars(til.Title, 50), "title", "must not be more than 50 chars")
+	v.Check(validator.MaxChars(til.Content, 5000), "content", "must not be more than 5000 bytes")
 }
 
 type TILModel struct {

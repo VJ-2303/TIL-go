@@ -8,6 +8,7 @@ import (
 	"strings"
 
 	"github.com/vj-2303/til-go/internal/data"
+	"github.com/vj-2303/til-go/internal/validator"
 )
 
 func (app *application) home(w http.ResponseWriter, r *http.Request) {
@@ -35,14 +36,23 @@ func (app *application) tilCreate(w http.ResponseWriter, r *http.Request) {
 		app.serverError(w, err)
 		return
 	}
-	title := r.PostForm.Get("title")
-	content := r.PostForm.Get("content")
+	til := &data.TIL{
+		Title:   r.PostForm.Get("title"),
+		Content: r.PostForm.Get("content"),
+	}
 
-	if strings.TrimSpace(title) == "" {
-		app.render(w, r, http.StatusUnprocessableEntity, "create.html", nil)
+	v := validator.New()
+
+	if data.ValidateTIL(v, til); !v.Valid() {
+		data := &templateData{
+			TIL:    til,
+			Errors: v.Errors,
+		}
+		app.render(w, r, http.StatusUnprocessableEntity, "create.html", data)
 		return
 	}
-	id, err := app.models.TILs.Insert(title, content)
+
+	id, err := app.models.TILs.Insert(til.Title, til.Content)
 	if err != nil {
 		app.serverError(w, err)
 		return
