@@ -90,3 +90,23 @@ func (m *TILModel) Get(id int) (*TIL, error) {
 	}
 	return &t, nil
 }
+
+func (m *TILModel) Update(id int, title, content string) error {
+
+	query := `UPDATE tils
+			 SET  title = $1, content = $2
+			 WHERE id = $3`
+
+	result, err := m.DB.Exec(query, title, content, id)
+	if err != nil {
+		return err
+	}
+	rowsAffected, err := result.RowsAffected()
+	if err != nil {
+		return err
+	}
+	if rowsAffected == 0 {
+		return ErrTilNotExists
+	}
+	return nil
+}
