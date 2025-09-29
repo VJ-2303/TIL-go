@@ -80,3 +80,51 @@ func (app *application) tilView(w http.ResponseWriter, r *http.Request) {
 	}
 	app.render(w, r, http.StatusOK, "view.html", data)
 }
+
+func (app *application) tilEdit(w http.ResponseWriter, r *http.Request) {
+	id, err := strconv.Atoi(strings.TrimPrefix(r.URL.Path, "/til/edit/"))
+	if err != nil || id < 1 {
+		http.NotFound(w, r)
+		return
+	}
+	til, err := app.models.TILs.Get(id)
+	if err != nil {
+		if errors.Is(err, data.ErrTilNotExists) {
+			http.NotFound(w, r)
+		} else {
+			app.serverError(w, err)
+		}
+		return
+	}
+	if r.Method == http.MethodGet {
+		data := &templateData{
+			TIL: til,
+		}
+		app.render(w, r, http.StatusOK, "edit.html", data)
+		return
+	}
+	err = r.ParseForm()
+	if err != nil {
+		app.serverError(w, err)
+		return
+	}
+	til.Title = r.PostForm.Get("title")
+	til.Content = r.PostForm.Get("content")
+
+	v := validator.New()
+
+	if data.ValidateTIL(v, til); !v.Valid() {
+		data := &templateData{
+			TIL:    til,
+			Errors: v.Errors,
+		}
+		app.render(w, r, http.StatusUnprocessableEntity, "edit.html", data)
+		return
+	}
+	err = app.models.TILs.Update(id, til.Title, til.Content)
+	if err != nil {
+		app.serverError(w, err)
+		return
+	}
+	http.Redirect(w, r, fmt.Sprintf("/til/view/%d", id), http.StatusSeeOther)
+}

@@ -1,0 +1,22 @@
+{{template "base" .}} {{define "main"}}
+<form action="/til/edit/{{.TIL.IDs}}" method="POST" novalidate>
+    <h2>Edit TIL</h2>
+    <div>
+        <label>Title:</label>
+        {{with .Errors.title}}
+        <label class="error">{{.}}</label>
+        {{end}}
+        <input type="text" name="title" value="{{.TIL.Title}}" />
+    </div>
+    <div>
+        <label>Content:</label>
+        {{with .Errors.content}}
+        <label class="error">{{.}}</label>
+        {{end}}
+        <textarea name="content">{{.TIL.Content}}</textarea>
+    </div>
+    <div>
+        <input type="submit" value="Save Changes" />
+    </div>
+</form>
+{{end}}
